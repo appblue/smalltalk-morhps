@@ -1,0 +1,10 @@
+Object subclass: #MyClass	instanceVariableNames: '' 	classVariableNames: ''	package: 'KrisMorph'
+
+initialize	super initialize.	self extent: 1024 @ 800.	surface := AthensCairoSurface extent: self extent.	square := surface createPath: [ :builder |
+	  builder absolute; moveTo: -1 @ -1; lineTo: 1 @ -1; lineTo: 1 @ 1; lineTo: -1 @ 1 ].	frame := 1.	self startStepping
+
+drawOn: aCanvas	surface drawDuring: [ :canvas | 		surface clear.		canvas pathTransform loadIdentity.		canvas pathTransform			translateX: self extent x * 0.5 + (100 * ((frame * 1.5) sin)) 					   Y: self extent y * 0.5 + (100 * ((frame * 1.2) cos));			scaleBy: 5 * (frame sin) + 60;			rotateByDegrees:  (frame * 10 + ((frame * 2 + 1.7) cos * 5)).		canvas			setPaint: (Color red alpha: 0.5);			drawShape: square.		canvas pathTransform loadIdentity.		canvas pathTransform			translateX: self extent x * 0.4 + (80 * ((frame * 1.7) sin)) 					   Y: self extent y * 0.4 + (80 * ((frame * 1.3) cos));			scaleBy: 5 * ((frame * 1.4) sin) abs + 60;			rotateByDegrees:  (frame * 8 + ((frame * 3 + 1.7) cos * 5)).		canvas			setPaint: (Color black alpha: 0.5);			drawShape: square.	].	surface displayOnMorphicCanvas: aCanvas at: bounds origin
+
+step 	frame := Time millisecondClockValue / 400.		self changed.
+
+stepTime 	^ 1.
