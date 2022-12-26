@@ -8,6 +8,8 @@ MyMorph new openInWindow.
 ```
 You should see new window with two squares (red and black) dancing :)
 
+![](morphs.png)
+
 ## Installation
 Simplest way to install the code is to:
 * create a new Package `KrisMorph`
